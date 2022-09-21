@@ -1,0 +1,89 @@
+#include "LinkedList.h"
+
+LinkedList::LinkedList() {
+  m_head = new ListNode();
+  m_tail = new ListNode();
+  m_head->prev = NULL;
+  m_head->next = m_tail;
+  m_tail->prev = m_head;
+  m_tail->next = NULL;
+}
+
+LinkedList::~LinkedList() {
+  ListNode *n = m_head;
+  while (n != NULL) {
+    ListNode *tmp = n->m_next;
+    delete n;
+    n = tmp;
+  }
+}
+
+void LinkedList::add(const T &data) {
+  ListNode *n = new ListNode(data, m_tail->prev, m_tail);
+  m_tail->prev->next = n;
+  m_tail->prev = n;
+}
+
+LinkedList::LinkedList() {
+  m_head = new ListNode();
+  m_head->prev = m_head;
+  m_head->next = m_head;
+}
+
+LinkedList::~LinkedList() {
+  ListNode *n = m_head;
+  while (n != NULL) {
+    ListNode *tmp = n->m_next;
+    delete n;
+    n = tmp;
+  }
+}
+
+void LinkedList::add(const T &data) {
+  ListNode *n = new ListNode(data, m_head->prev, m_head);
+  m_head->prev->next = n;
+  m_head->prev = n;
+}
+
+ListIterator &LinkedList::begin() {
+  return ListIterator(m_head->next);
+}
+
+ListIterator &LinkedList::end() {
+  return ListIterator(m_tail);
+}
+
+ListIterator &ListIterator::operator++() {
+  m_curr = m_curr->next;
+  return *this;
+}
+
+T &ListIterator::operator*() {
+  return m_curr->data;
+}
+
+class ListIterator::ListIterator(const ListNode &n) {
+  m_curr = n;
+}
+
+void ListIterator::insert(T data) {
+  ListNode *n = new ListNode(data, m_curr, m_curr->next);
+  m_curr->next->prev = n;
+  m_curr->next = n;
+}
+
+void ListIterator::erase() {
+  ListNode *n = m_curr;
+  m_curr->prev->next = m_curr->next;
+  m_curr->next->prev = m_curr->prev;
+  m_curr = m_curr->next;
+  delete n;
+}
+
+
+int main (int argc, char *argv[]) {
+  LinkedList<int> l;
+  for (ListIterator<int> i = l.begin(); i != l.end(); i++) {
+    std::cout<<(*i)<<std::endl;
+  }
+}

@@ -1,0 +1,5 @@
+int main (int argc, char *argv[]) {
+  Foo *foo = new Foo();
+  Foo *bar = foo;
+  *bar = *foo;
+}

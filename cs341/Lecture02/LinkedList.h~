@@ -1,0 +1,47 @@
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
+
+template <class T>
+class ListNode {
+  T m_data;
+  ListNode *m_prev, *m_next;
+ public:
+  ListNode (T &data, const ListNode *prev, const ListNode *next) : m_data(data), n_prev(prev), m_next(next) {};
+  ListNode() {};
+  friend class ListIterator<T>;
+  friend class LinkedList<T>;
+}
+
+template <class T>
+class LinkedList {
+  ListNode *m_head, *m_tail;
+ public:
+  LinkedList();
+  ~LinkedList();
+  void add(const T &data);
+  ListIterator &begin();
+  ListIterator &end();
+};
+
+template <class T>
+class ListIterator {
+  ListNode *m_curr;
+public:
+  ListIterator(const ListNode &n);
+  void operator++o();
+  T operator*();
+  void insert(T data);
+  void erase();
+}
+  
+
+template <class T>
+class CircularLinkedList {
+  ListNode *m_head;
+ public:
+  CircularLinkedList();
+  ~CircularLinkedList();
+  void add(const T &data);
+}
+
+#endif
