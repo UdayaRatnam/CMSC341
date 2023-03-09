@@ -1,3 +1,3 @@
 # CompSciClasses
-##cs202 - OOPS
-##cs341 - Data Structures
+## cs202 - OOPS
+## cs341 - Data Structures
